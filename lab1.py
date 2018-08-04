@@ -6,10 +6,12 @@ import time
 def thread_func(matA, matB, result, row):
     result[row] = np.matmul(matA, matB)
 
+#@profile
 def thread_func_02(matA, matB, result, rows, i):
     for j in range(rows):
         result[i * rows + j] = np.matmul(matA[j], matB)
 
+#@profile
 def multithread_func(matA, matB, result_queue, i):
     result_queue.put((np.matmul(matA, matB), i))
     #result_queue.put(np.matmul(matA, matB))
@@ -79,11 +81,6 @@ def main():
     end_time = time.time()
     print('Time elapsed:', end_time - start_time)
     print('Answer(process) is correct:', np.all(np.matmul(matA, matB) == result_multi))
-    #print(result)
-    #print()
-    #print(np.matmul(matA, matB))
-    #print()
-    #print(result_multi)
 
     # Generate random matrix and result matrix
     result_normal = np.zeros((matA.shape[0], matB.shape[1]))

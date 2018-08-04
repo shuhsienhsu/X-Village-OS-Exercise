@@ -8,6 +8,7 @@ lock = threading.Lock()
 queue = queue.Queue(buffer_size)
 file_count = 0
 
+@profile
 def producer(top_dir, queue_buffer):
     test = os.listdir(top_dir)
     #count = 0
@@ -19,6 +20,7 @@ def producer(top_dir, queue_buffer):
             #count += 1
     # Search sub-dir in top_dir and put them in queue
 
+@profile
 def consumer(queue_buffer):
     global file_count
     try:
@@ -27,7 +29,7 @@ def consumer(queue_buffer):
         files = os.listdir(dir)
         for i in files:
             if(os.path.isfile(os.path.join(dir, i))):
-                print(os.path.join(dir, i))
+                #print(os.path.join(dir, i))
                 lock.acquire()
                 file_count += 1
                 lock.release()
